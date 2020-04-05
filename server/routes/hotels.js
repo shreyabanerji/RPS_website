@@ -2,7 +2,8 @@ const router=require('express').Router()
 const Hotel=require('../models/hotels');
 const upload=require("../middlewares/upload-photo");
 const fs = require('fs');
-
+const mongoose=require('mongoose');
+//mongoose.model("cities", CitiesSchema)
 router.post("/hotels",upload.single('photo'),async(req,res)=>{
     try{
         let hotel=new Hotel();
@@ -12,7 +13,7 @@ router.post("/hotels",upload.single('photo'),async(req,res)=>{
         hotel.address=req.body.address;
         hotel.photo.data = fs.readFileSync(req.file.path);
         hotel.photo.contentType = 'image/png';
-
+        hotel.avg_price=req.body.avg_price;
         //hotel.photo=req.body.photo;
         await hotel.save();
         res.json({
@@ -33,10 +34,12 @@ router.post("/hotels",upload.single('photo'),async(req,res)=>{
 //get all hotels
 router.get("/hotels",async(req,res)=>{
     try{
-        let hotels=await Hotel.find();
+        let hotels=await Hotel.find()
+        .populate("city")
+        .exec();
         res.json({
             success:true,
-            hotels:hotels
+            hotels:hotels,
         });
     }
         catch(err){

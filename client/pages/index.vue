@@ -8,10 +8,10 @@
 
         <!--Main Content-->
         <div class="col-xl-10 col-lg-9 md-8 col-sm-8">
-          <FeaturedProduct/>
+          <!--<FeaturedProduct />-->
 
           <div class="mainResults">
-            <ul class="s-result-list">
+            <ul class="s-result-list" v-for="hotel in hotels" :key="hotel._id">
               <li class="s-result-item celwidget">
                 <div class="s-item-container">
                   <!--Best Rated-->
@@ -25,7 +25,11 @@
                       <!--Image-->
                       <div class="col-sm-3 text-center"> 
                           <a href="#">
-                            <img src="/img/hotel_1.jpg" class="img-fluid"/><!--product.photo-->
+                            <!--arrayBufferToBase64(hotel.photo.data)-->
+                            <img src="hotel.photo.data" style="width:150px" class="img-fluid"/><!--product.photo-->
+                            <!--img :src="product.photo"
+                            style="width:150px"
+                            class="img-fluid"-->
                           </a>
                       </div>
                       <div class="col-sm-9">
@@ -33,7 +37,7 @@
                           <!--Date-->
                           <a href="#" class="a-link-normal">
                             <h2 class="a-size-medium">
-                              RPS HOTELS
+                              {{hotel.name}}
                               <span class="a-letter-space"></span>
                               <span class="a-letter-space"></span>
                               <span class="a-size-small a-color-secondary">Apr 3,2020</span>
@@ -42,22 +46,22 @@
                         </div>
                         <!--City-->
                         <div class="a-row a-spacing-small">
-                          City
+                          {{hotel.city.name}}
                         </div>
                         <!--Price-->
                         <div class="a-row-spacing-none">
                           <a href="#" class="a-link-normal a-text-normal">
-                          <span class="a-offscreen">$99</span>
+                          <span class="a-offscreen">${{hotel.avg_price}}</span>
                             <span class="a-color-base sx-zero-spacing">
                             <span class="sx-price sx-price-large">
-                              <sup class="sx-price-company">$</sup>
-                              <span class="sx-price-whole">99</span>
-                              <sup class="sx-price-fractional">00</sup>
+                             
+                              <span class="sx-price-whole">Rs.{{hotel.avg_price}}</span>
+                              
                             </span>
                           </span>
                           </a>
                           <span class="a-letter-space"></span>
-                          <span class="a-size-base-plus a-color-secondary a-text-strike">$28</span>
+                          <span class="a-size-base-plus a-color-secondary a-text-strike">Rs.5000</span>
 
                         </div>
                         <!--Ratings-->
@@ -83,9 +87,37 @@
 
   <script>
   import FeaturedProduct from "~/components/FeaturedProduct";
+  import axios from 'axios';
   export default {
     componenets:{
       FeaturedProduct
+    },
+    methods:{
+    arrayBufferToBase64(buffer) {
+    var binary = '';
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => binary += String.fromCharCode(b));
+    return 'data:image/jpeg;base64,'+window.btoa(binary);
     }
+    },
+    async asyncData(){
+      try
+      {
+        let response=await axios.get("http://localhost:3000/api/hotels");
+         //console.log(response.data.hotels);
+        //let img=arrayBufferToBase64(response.data.hotels.img.data);
+        
+        return {
+          hotels:response.data.hotels
+          //img:img
+       
+      }
+      }
+      catch(err){
+        console.log(err);
+      }
+    
+    }
+  
   };
   </script>

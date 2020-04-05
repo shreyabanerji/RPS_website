@@ -1,4 +1,5 @@
 <template>
+
     <div class="mainContent">
         <div class="unified_widget pageBanner">
             <h1>Hotels</h1>
@@ -18,7 +19,8 @@
                     </div>
                 </div>
                 <div class="col-sm-7 m-auto">
-                    <div class="bx-root-heading">The Program</div>
+                    <div class="bx-root-heading">The Program
+                    </div>
                 </div>
                 <div class="bx-root-subtext">
                     Write Something here
@@ -31,3 +33,8 @@
     </div>
 
 </template>
+<script>
+export default {
+    
+}
+</script>

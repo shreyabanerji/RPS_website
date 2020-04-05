@@ -1,4 +1,4 @@
-
+const url="http://localhost:3000"
 export default {
   mode: 'universal',
   /*
@@ -43,6 +43,10 @@ export default {
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
   ],
+  axios:{
+    proxy: true,
+    baseURL:URL
+  },
   /*
   ** Build configuration
   */
