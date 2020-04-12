@@ -3,19 +3,21 @@ const Hotel=require('../models/hotels');
 const upload=require("../middlewares/upload-photo");
 const fs = require('fs');
 const mongoose=require('mongoose');
+
 //mongoose.model("cities", CitiesSchema)
 router.post("/hotels",upload.single('photo'),async(req,res)=>{
     try{
         let hotel=new Hotel();
         hotel.name=req.body.name;
         hotel.description=req.body.description;
-        hotel.photo=req.file;
+        //hotel.photo=req.file;
         hotel.address=req.body.address;
-        hotel.photo.data = fs.readFileSync(req.file.path);
+        hotel.photo.data = "http://localhost:3000/"+req.file.filename;
         hotel.photo.contentType = 'image/png';
         hotel.avg_price=req.body.avg_price;
         //hotel.photo=req.body.photo;
         await hotel.save();
+        
         res.json({
             status:true,
             message:"Saved"
@@ -37,6 +39,7 @@ router.get("/hotels",async(req,res)=>{
         let hotels=await Hotel.find()
         .populate("city")
         .exec();
+        //res.setHeader('content-type','image/png');
         res.json({
             success:true,
             hotels:hotels,
@@ -53,7 +56,10 @@ router.get("/hotels",async(req,res)=>{
 //GET-get a single hotel
 router.get("/hotels/:id",async(req,res)=>{
     try{
-        let hotel=await Hotel.findOne({_id:req.params.id});
+        let hotel=await Hotel.findOne({_id:req.params.id})
+        .populate("city")
+        .exec();
+
         res.json({
             success:true,
             hotel:hotel
@@ -121,4 +127,8 @@ router.delete('/hotels:id',async(req,res)=>{
         });
     }
 })
+
+    
+
+    
 module.exports=router;

@@ -1,4 +1,4 @@
-const url="http://localhost:3000"
+const URL="http://localhost:3000"
 export default {
   mode: 'universal',
   /*
@@ -42,11 +42,18 @@ export default {
   modules: [
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy',
+    '@nuxtjs/auth',
   ],
   axios:{
     proxy: true,
     baseURL:URL
   },
+  proxy:{
+    "/api":URL
+  },
+  
   /*
   ** Build configuration
   */
@@ -56,5 +63,19 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  auth:{
+    strategies:{
+      local:{
+        endpoints:{
+          login:{
+            propertyName:"token"
+          },
+          logout: true
+        }
+      }
+    }
   }
 }
+
+//why token?

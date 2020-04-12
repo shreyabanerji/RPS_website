@@ -1,0 +1,2 @@
+//enable the vuex store
+

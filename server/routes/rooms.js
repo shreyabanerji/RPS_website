@@ -6,10 +6,10 @@ router.post('/rooms',async(req,res)=>{
     try{
         const room=new Room();
         //room.hotel_name=req.body.hotel_name;
-        room.type=req.body.type;
+        //room.type=req.body.type;
         room.price=req.body.price;
         room.room_no=req.body.room_no;
-        room.price=req.body.price;
+        //room.price=req.body.price;
         await room.save();
         res.json({
             sucess:true,
@@ -24,12 +24,12 @@ router.post('/rooms',async(req,res)=>{
     }
 });
 
-router.get("/cities",async(req,res)=>{
+router.get("/rooms",async(req,res)=>{
     try{
-        let cities=await room.find();
+        let rooms=await room.find();
         res.json({
             success:true,
-            cities:cities
+            rooms:rooms
         });
     }
         catch(err){

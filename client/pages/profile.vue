@@ -1,0 +1,54 @@
+<template>
+    <main>
+        <div class="container-fluid c-section">
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <div class="a-spacing-top-medium"></div>
+                    <h2>Profile Page</h2>
+                    <a href="#" @click="onLogout">Logout</a>
+                    <form>
+                        <!--Name-->
+                        <div class="a-spacing-top-medium">
+                            <label>Name</label>
+                            <input class="a-input-text" style="width:100px" v-model="name" :placeholder="$auth.$state.user.name"/>
+                        </div>
+                        <!--Email-->
+                        <div class="a-spacing-top-medium">
+                            <label>Type</label>
+                            <input class="a-input-text" style="width:100px" v-model="email"  :placeholder="$auth.$state.user.email"/>
+                        </div>
+                        <!--Password-->
+                        <div class="a-spacing-top-medium">
+                            <label>Password</label>
+                            <input class="a-input-text" style="width:100px" v-model="password"/>
+                        </div>      
+                            <hr/>
+                
+                        </form>
+                        <br/>
+                    </div>
+                <div class="col-sm-3"></div>
+            </div>
+        </div>
+    </main>
+    
+</template>
+
+<script>
+export default {
+    data(){
+        return {
+            name:"",
+            email:"",
+            password:""
+
+        };
+    },
+    methods:{
+        async onLogout(){
+            await this.$auth.logout();
+        }
+    }
+};
+</script>

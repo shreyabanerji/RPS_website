@@ -1,4 +1,4 @@
-<template>
+<template >
   <main class="listingPage">
     <div class="container-fluid">
       <div class="row">
@@ -8,7 +8,9 @@
 
         <!--Main Content-->
         <div class="col-xl-10 col-lg-9 md-8 col-sm-8">
-          <!--<FeaturedProduct />-->
+          <FeaturedProduct/>
+          
+  
 
           <div class="mainResults">
             <ul class="s-result-list" v-for="hotel in hotels" :key="hotel._id">
@@ -26,7 +28,9 @@
                       <div class="col-sm-3 text-center"> 
                           <a href="#">
                             <!--arrayBufferToBase64(hotel.photo.data)-->
-                            <img src="hotel.photo.data" style="width:150px" class="img-fluid"/><!--product.photo-->
+                            
+                            <img :src="hotel.photo.data" style="width:150px height 100px" class="img-fluid"/><!--product.photo-->
+                            <!--<p>{{hotel.photo.data}}</p>-->
                             <!--img :src="product.photo"
                             style="width:150px"
                             class="img-fluid"-->
@@ -38,11 +42,14 @@
                           <a href="#" class="a-link-normal">
                             <h2 class="a-size-medium">
                               {{hotel.name}}
-                              <span class="a-letter-space"></span>
-                              <span class="a-letter-space"></span>
+                               </h2>
+                            </a>
+                            
+                            <div class="a-row a-spacing-small">
+              
                               <span class="a-size-small a-color-secondary">Apr 3,2020</span>
-                            </h2>
-                          </a>
+                            </div>
+                            
                         </div>
                         <!--City-->
                         <div class="a-row a-spacing-small">
@@ -60,8 +67,7 @@
                             </span>
                           </span>
                           </a>
-                          <span class="a-letter-space"></span>
-                          <span class="a-size-base-plus a-color-secondary a-text-strike">Rs.5000</span>
+                          
 
                         </div>
                         <!--Ratings-->
@@ -86,32 +92,31 @@
   </template>
 
   <script>
-  import FeaturedProduct from "~/components/FeaturedProduct";
-  import axios from 'axios';
+import axios from 'axios';
+import FeaturedProduct from './FeaturedProduct.vue';
+import Vue from 'vue'
+
+
   export default {
-    componenets:{
+    plugins: ['~/plugins/multi-stage.js'],
+    components:{
       FeaturedProduct
     },
-    methods:{
-    arrayBufferToBase64(buffer) {
-    var binary = '';
-    var bytes = [].slice.call(new Uint8Array(buffer));
-    bytes.forEach((b) => binary += String.fromCharCode(b));
-    return 'data:image/jpeg;base64,'+window.btoa(binary);
-    }
+    data(){
+      return{
+      isFP:false
+      }
     },
     async asyncData(){
       try
       {
         let response=await axios.get("http://localhost:3000/api/hotels");
-         //console.log(response.data.hotels);
-        //let img=arrayBufferToBase64(response.data.hotels.img.data);
         
         return {
-          hotels:response.data.hotels
-          //img:img
-       
-      }
+          hotels:response.data.hotels,
+          
+        }
+        //app.getFP();
       }
       catch(err){
         console.log(err);
