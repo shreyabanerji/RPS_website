@@ -120,6 +120,7 @@
             </div>
           </div>
           <!-- Last 3 grid Buying section -->
+          <template v-if="$auth.$state.loggedIn">
           <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="combinedBuyBox">
               <div class="buyBox">
@@ -135,7 +136,7 @@
                 <div class="a-section a-spacing-none">
                   <div class="row">
                     <div class="col-sm-5 col-5">
-                      <select>
+                      <select v-model="rooms">
                         <option value="1">Rooms: &nbsp; 1</option>
                         <option value="2">Rooms: &nbsp; 2</option>
                         <option value="3">Rooms: &nbsp; 3</option>
@@ -207,6 +208,20 @@
 
       
           </div>
+          </template>
+          <template v-else>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="a-row">
+                      <b>
+                        Want to book this hotel?
+                        <nuxt-link to="/signup" class="a-link-emphasis">Sign up</nuxt-link>
+                        or
+                        <nuxt-link to="/login" class="a-link-emphasis">Login</nuxt-link>
+                      </b>
+                    </div>
+            </div>
+
+          </template>
         </div>
         <br />
         
@@ -248,7 +263,8 @@ export default {
         return{
             liked:0,
             checkin:"",
-            checkout:""
+            checkout:"",
+            rooms:0
           
         };
     },
@@ -258,8 +274,8 @@ export default {
                 let data=new FormData();
                 data.append("liked",this.liked);
                 //data.append("review",this.review);
-            
-                let response=await this.$axios.post(`/api/likes/${this.$route.params.id}`,data);
+
+                let response=await this.$axios.post(`/api/likes/${this.$route.params.id}/${this.rooms}`,data);
                
                 console.log(response)
                 this.$router.push(`/hotels/${this.$route.params.id}`);

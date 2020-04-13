@@ -10,20 +10,17 @@
                     <form>
                         <!--Name-->
                         <div class="a-spacing-top-medium">
-                            <label>Name</label>
-                            <input class="a-input-text" style="width:100px" v-model="name" :placeholder="$auth.$state.user.name"/>
+                            <label>Name:</label>
+                            <label style="width:100px">{{$auth.$state.user.name}}</label>
                         </div>
                         <!--Email-->
                         <div class="a-spacing-top-medium">
-                            <label>Type</label>
-                            <input class="a-input-text" style="width:100px" v-model="email"  :placeholder="$auth.$state.user.email"/>
+                            <label>Email:</label>
+                            <label style="width:100px">{{$auth.$state.user.email}}</label>
                         </div>
                         <!--Password-->
-                        <div class="a-spacing-top-medium">
-                            <label>Password</label>
-                            <input class="a-input-text" style="width:100px" v-model="password"/>
-                        </div>      
-                            <hr/>
+                          
+                           
                 
                         </form>
                         <br/>
