@@ -85,7 +85,7 @@
               <div class="mediaMatrix">
                 <div class="formats">
                   <a href="#" class="link-expander">
-                    >
+              
                     <span class="tmmShowPrompt">See more options in the same price_range</span>
                   </a>
                 </div>
@@ -121,7 +121,10 @@
           </div>
           <!-- Last 3 grid Buying section -->
           <div class="col-lg-3 col-md-3 col-sm-6">
-
+            <div class="combinedBuyBox">
+              <div class="buyBox">
+                  <div class="a-section">
+                    <div class="clearfix">
                     <!-- Hotel Price -->
                     <div class="float-right">
                       <span class="a-size-medium a-color-price offer-price a-text-normal">Rs.{{hotel.avg_price}}</span>
@@ -148,6 +151,8 @@
                     <span class="a-color-base buyboxShippingLabel"></span>
                   </div>
                 </div>
+                <input type="date" v-model="checkin" id="checkin" name="Check-in">
+                <input type="date" v-model="checkout" id="checkout" name="Check-out">
                 <div class="a-section a-spacing-small">
                   <div class="a-section a-spacing-none">
                     <span class="a-size-medium a-color-success">Available</span>
@@ -160,7 +165,7 @@
                     <span class="a-spacing-small a-button-primary a-button-icon">
                       <span class="a-button-inner">
                       
-                        <input type="submit" name="submit.add-to-cart" class="a-button-input" />
+                        <input type="submit" name="submit.add-to-cart" class="a-button-input" @click="onBook" />
                         <span class="a-button-text">Book now</span>
                       </span>
                     </span>
@@ -207,20 +212,19 @@
         
           </div>
         </div>
-      </div>
-    </div>
+     
   </main>
 </template>
     
-<script>
-import axios from 'axios'
+<script lang="ts">
+import axios from 'axios';
 
 export default {
   
-  async asyncData({params})
+  async asyncData({$axios,params})
     {
         try{
-          
+            
             let singleHotel=  await axios.get(`http://localhost:3000/api/hotels/${params.id}`);
             //let manyReviews= axios.get(`http://localhost:3000/api/reviews/${params.id}`);
             //const [hotelResponse,reviewRespone]= await Promise.all([
@@ -231,7 +235,8 @@ export default {
             return{
                 hotel:singleHotel.data.hotel,
                 //reviews:reviewResponse.data.reviews
-                liked:0
+                liked:0,
+              
             }
         }
         catch(err){
@@ -241,7 +246,9 @@ export default {
   },
  data(){
         return{
-            liked:0
+            liked:0,
+            checkin:"",
+            checkout:""
           
         };
     },
@@ -251,8 +258,8 @@ export default {
                 let data=new FormData();
                 data.append("liked",this.liked);
                 //data.append("review",this.review);
-             
-                let response=await axios.post(`/api/likes/${this.$route.params.id}`,data);
+            
+                let response=await this.$axios.post(`/api/likes/${this.$route.params.id}`,data);
                
                 console.log(response)
                 this.$router.push(`/hotels/${this.$route.params.id}`);
@@ -262,6 +269,22 @@ export default {
                 console.log(err);
             }
 
+  },
+  async onBook(){
+    try{
+      console.log("Onbooked")
+      let data=new FormData();
+      data.append("checkin",this.checkin);
+      data.append("checkout",this.checkout);
+      let response =await this.$axios.$post(`/api/book/${this.$route.params.id}`,data)
+      console.log(response)
+      this.$router.push("/");
+    }
+    catch(err){
+                console.log(err);
+            }
+      
+     
   }
 
 }

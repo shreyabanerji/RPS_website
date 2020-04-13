@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <Search/>
+                    
                 </div>
                 <div class="col-sm-6"></div>
             </div>
@@ -107,10 +107,8 @@
 </template>
 
 <script>
-import Search from "~/components/Search"
+
 export default {
-    components:{
-        Search
-    }
+  
 }
 </script>

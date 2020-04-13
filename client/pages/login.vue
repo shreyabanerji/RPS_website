@@ -62,7 +62,6 @@ export default {
     layout:"none",
     data(){
         return{
-            name:"",
             email:"",
             password:""
         }
@@ -74,8 +73,6 @@ export default {
             
             try
             {
-                
-            
                    //console.log("in if statement")
                     this.$auth.loginWith("local",{
                         data:{

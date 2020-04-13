@@ -7,7 +7,13 @@ const mongoose=require('mongoose');
 
 router.get("/getRec",verifyToken,async(req,res)=>{
     try
-    {
+    {   if(verifyToken.success==false){
+        res.json({
+            success:true,
+            hotel:false
+        })
+        }
+        else{
         let user=await User.find({}).populate("likes");
         rating_dict={}
         Object.keys(user).forEach(function(key) {
@@ -121,7 +127,7 @@ router.get("/getRec",verifyToken,async(req,res)=>{
 
 
 
-                    var pc=pearson_correlation(final_dict,"Samar","Rachana");
+                    //var pc=pearson_correlation(final_dict,"Samar","Rachana");
 
 
                     var similar_user = function(dataset,person,num_user,distance){
@@ -143,7 +149,7 @@ router.get("/getRec",verifyToken,async(req,res)=>{
                         return score;
                             
                         }
-                        var su=similar_user(final_dict,'Samar',3,pearson_correlation);
+                        //var su=similar_user(final_dict,'Samar',3,pearson_correlation);
 
 
 
@@ -214,8 +220,8 @@ router.get("/getRec",verifyToken,async(req,res)=>{
                         }
 
                         var rc=recommendation_eng(final_dict,req.decoded.name,pearson_correlation)
-
-
+                        var id1=rc[1][0]
+                        let hotel=await Hotel.findOne({_id: id1}).populate("city");
 
 
 
@@ -224,9 +230,10 @@ router.get("/getRec",verifyToken,async(req,res)=>{
 
         res.json({
             success:true,
-            hotel:rc
+            hotel:hotel
         })
     }
+}
         catch(err){
             res.status(500).json({
                 success:false,

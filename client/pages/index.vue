@@ -8,7 +8,10 @@
 
         <!--Main Content-->
         <div class="col-xl-10 col-lg-9 md-8 col-sm-8">
-          <FeaturedProduct/>
+          <template v-if="$auth.$state.loggedIn">
+              <FeaturedProduct :recommendation="recommendation"/>
+          </template>
+          
           
   
 
@@ -17,11 +20,7 @@
               <li class="s-result-item celwidget">
                 <div class="s-item-container">
                   <!--Best Rated-->
-                  <div class="a-spacing-micro"> 
-                    <div class="bestSeller">
-                      <a href="#">Best Rated</a>
-                    </div>
-                  </div>
+                  
                   <div>
                     <div class="row">
                       <!--Image-->
@@ -29,7 +28,7 @@
                           <a href="#">
                             <!--arrayBufferToBase64(hotel.photo.data)-->
                             
-                            <img :src="hotel.photo.data" style="width:150px height 100px" class="img-fluid"/><!--product.photo-->
+                            <img :src="hotel.photo.data" style="width:150px height 100px" class="img-fluid" onload="feature"/><!--product.photo-->
                             <!--<p>{{hotel.photo.data}}</p>-->
                             <!--img :src="product.photo"
                             style="width:150px"
@@ -39,15 +38,16 @@
                       <div class="col-sm-9">
                         <div class="a-row-spacing-small">
                           <!--Date-->
-                          <a href="#" class="a-link-normal">
+                         
+                          <nuxt-link :to="`hotels/${hotel._id}`" class="a-link-normal">
                             <h2 class="a-size-medium">
                               {{hotel.name}}
                                </h2>
-                            </a>
+                          </nuxt-link>
                             
                             <div class="a-row a-spacing-small">
               
-                              <span class="a-size-small a-color-secondary">Apr 3,2020</span>
+                              <span class="a-size-small a-color-secondary">April 16,2020</span>
                             </div>
                             
                         </div>
@@ -93,27 +93,32 @@
 
   <script>
 import axios from 'axios';
-import FeaturedProduct from './FeaturedProduct.vue';
+
+import FeaturedProduct from '~/components/FeaturedProduct'
 import Vue from 'vue'
 
 
+
   export default {
-    plugins: ['~/plugins/multi-stage.js'],
-    components:{
-      FeaturedProduct
-    },
+   components:{FeaturedProduct},
+   
     data(){
       return{
       isFP:false
       }
     },
-    async asyncData(){
+    async asyncData({$axios}){
       try
       {
-        let response=await axios.get("http://localhost:3000/api/hotels");
-        
+        let response= $axios.$get("http://localhost:3000/api/hotels");
+        let recommendation=$axios.$get("http://localhost:3000/api/getRec");
+        const [hotel,recom]=await Promise.all([
+          response,recommendation
+        ])
+        console.log(recom.hotel)
         return {
-          hotels:response.data.hotels,
+          hotels:hotel.hotels,
+          recommendation:recom.hotel
           
         }
         //app.getFP();
@@ -122,6 +127,11 @@ import Vue from 'vue'
         console.log(err);
       }
     
+    },
+    methods:{
+      async feature(){
+        setTimeout(console.log("get feature"),3000);
+      }
     }
   
   };
