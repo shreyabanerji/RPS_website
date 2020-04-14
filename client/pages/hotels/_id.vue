@@ -81,24 +81,16 @@
                 </div>
               </div>
               <hr/>
-              <!-- A tags Dummy Data -->
-              <div class="mediaMatrix">
-                <div class="formats">
-                  <a href="#" class="link-expander">
               
-                    <span class="tmmShowPrompt">See more options in the same price_range</span>
-                  </a>
-                </div>
-              </div>
               <div>
               <template v-if="$auth.$state.loggedIn">
-              <div class="combinedBuyBox">
+              <div class="combinedBuyBox" style="width:50%">
               <div class="buyBox">
                 <div class="a-section">
                   <div class="clearfix">
                     <div class="a-spacing-base">
-                      <h2 class="a-spacing-base">Write your review</h2>
-                        <input type="number" placeholder="Give rating" style="width: 10%;" v-model="liked"/>
+                      <h3 class="a-spacing-base">Give your rating</h3>
+                        <input type="number" placeholder="Give rating" style="width: 20%;" min="1" max="5" v-model="liked"/>
                     </div>
                     <div class="a-row text-right a-spacing-top-large">
                       <span class="a-button-register">
@@ -275,7 +267,7 @@ export default {
                 data.append("liked",this.liked);
                 //data.append("review",this.review);
 
-                let response=await this.$axios.post(`/api/likes/${this.$route.params.id}/${this.rooms}`,data);
+                let response=await this.$axios.post(`/api/likes/${this.$route.params.id}/`,data);
                
                 console.log(response)
                 this.$router.push(`/hotels/${this.$route.params.id}`);
@@ -292,7 +284,7 @@ export default {
       let data=new FormData();
       data.append("checkin",this.checkin);
       data.append("checkout",this.checkout);
-      let response =await this.$axios.$post(`/api/book/${this.$route.params.id}`,data)
+      let response =await this.$axios.$post(`/api/book/${this.$route.params.id}/${this.rooms}`,data)
       console.log(response)
       this.$router.push("/");
     }

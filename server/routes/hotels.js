@@ -57,7 +57,7 @@ router.get("/hotels",async(req,res)=>{
 router.get("/hotels/:id",async(req,res)=>{
     try{
         let hotel=await Hotel.findOne({_id:req.params.id})
-        .populate("city")
+        .populate("city likes")
         .exec();
 
         res.json({

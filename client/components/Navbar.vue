@@ -82,11 +82,11 @@
                                             class="nav-a nav-a-2"  
                                             id="nav-link-accountList" 
                                             tabindex="0">
-                                <span class="nav-line-1">Hello,Sign in</span>
-                                    <span class="nav-line-2">
-                                        Account &amp; Lists
-                                        <span class="nav-icon nav-arrow" style="visibility: visible"></span>
-                                    </span>
+                                
+                                 <span style="color:white">
+                                        Hello, Sign in
+                                </span>
+                                  
                         
                                 </nuxt-link>
                             </template>

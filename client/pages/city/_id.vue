@@ -141,7 +141,7 @@ import Vue from 'vue'
       try
       {
         
-        let response= await $axios.$get("http://localhost:3000/api/hotels");
+        let response= await $axios.$get("http://localhost:3000/api/");
         let recommendation=$axios.$get("http://localhost:3000/api/getRec");
         const [hotel,recom]=await Promise.all([
           response,recommendation
