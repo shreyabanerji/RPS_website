@@ -1,18 +1,23 @@
 const router=require('express').Router()
-const Hotel=require('../models/hotels');
+const Likes=require('../models/likes');
 const upload=require("../middlewares/upload-photo");
 const fs = require('fs');
 const mongoose=require('mongoose');
 
 //mongoose.model("cities", CitiesSchema)
-router.get("/getHotels/:cityID",async(req,res)=>{
+router.get("/getAvgRating/:hotelID",async(req,res)=>{
     try{
-        let hotels=await Hotel.find({city:req.params.cityID}).populate("city")
-        
-        
+        let hotels=await Likes.find({hotelID:req.params.hotelID})
+        var sum=0
+        var count=0
+        Object.keys(hotels).forEach(function(key) {
+            sum=sum+parseInt(hotels[key]["likes"])
+            count++
+         })
+        var lik=sum/count;
         res.json({
             status:true,
-            hotels:hotels
+            avglike:lik
             //p: hotel.photo
         });
 

@@ -16,7 +16,9 @@
                     <div class="col-sm-7 m-auto">
                         <div class="bx-root-dtls">
                             <div class="bx-root-heading">
+                                <a :href="`/hotels/${recommendation._id}`" style="color:black">
                                 {{recommendation.name}}
+                                </a>
                             </div>
                         </div>
                     </div>

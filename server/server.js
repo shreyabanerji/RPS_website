@@ -47,6 +47,7 @@ const reccomendationRoutes=require('./routes/recommendation');
 const bookingRoutes=require('./routes/booking')
 const readRoutes=require('./routes/read_file')
 const getHotelRoutes=require('./routes/getHotels')
+const getLikesRoutes=require('./routes/getlikes')
 
 app.use('/api',hotelRoutes);
 app.use('/api',cityRoutes);
@@ -58,6 +59,7 @@ app.use('/api',reccomendationRoutes);
 app.use('/api',bookingRoutes);
 app.use('/api',readRoutes);
 app.use('/api',getHotelRoutes);
+app.use('/api',getLikesRoutes);
 
 app.listen(3000,(err)=>{
     if(err){

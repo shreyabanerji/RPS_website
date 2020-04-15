@@ -31,7 +31,7 @@
               <!-- Image -->
               <div clas="imgBlock">
                 <div class="eBooksimg">
-                 <img :src="hotel.photo.data" class="img-fluid" />
+                 <img :src="hotel.photo.data" class="img-fluid" style="width:500px;height:200px"/>
                 </div>
               </div>
 
@@ -71,11 +71,18 @@
                     <div class="a-declarative">
                       Rating
                       <span>
-                        <a href="#">
-                          4.5 stars
+                        
+                          {{liked}}
                           <i class="a-icon a-icon-popover"></i>
-                        </a>
+                     
                       </span>
+                    </div>
+                  </div>
+                </div>
+                 <div class="row">
+                  <div class="col-sm-4 mb-1">
+                    <div class="a-declarative">
+                      {{hotel.likes.length}} people have rated this hotel.
                     </div>
                   </div>
                 </div>
@@ -148,9 +155,10 @@
                 <input type="date" v-model="checkout" id="checkout" name="Check-out">
                 <div class="a-section a-spacing-small">
                   <div class="a-section a-spacing-none">
-                    <span class="a-size-medium a-color-success">Available</span>
+                    <br>
+                    <span class="a-size-medium a-color-success">Book from</span>
                   </div>
-                  <div class="a-section a-spacing-mini">From this to this date</div>
+                  <div class="a-section a-spacing-mini"><b>From :</b> {{checkin}}  <b>to : {{checkout}}</b> </div>
                 </div>
 
                 <div class="a-section">
@@ -168,10 +176,10 @@
                   <div class="a-spacing-top-small">
                     <div class="a-section a-spacing-none">
                       <div class="a-section a-spacing-none a-spacing-top-mini">
-                       Book 3 rooms in 
+                       Book {{rooms}} rooms in 
                         <b>{{hotel.name}},{{hotel.city.name}}</b>
-                        <b>from Sept 23 - Monday, Sept. 30</b>
-                        Choose the payment method at checkout.
+                        <!--<b>from Sept 23 - Monday, Sept. 30</b>-->
+                       
                       </div>
                     </div>
                   </div>
@@ -191,7 +199,7 @@
                   <div class="clearfix">
                     
                     <div class="float-right">
-                      <span class="a-color-base offer-price a-text-normal">Rs.{{hotel.avg_price}}</span>
+                      <span class="a-color-base offer-price a-text-normal">Rs.{{rooms*hotel.avg_price}}</span>
                     </div>
                   </div>
                 </div>
@@ -212,6 +220,7 @@
                       </b>
                     </div>
             </div>
+            <br><br>
 
           </template>
         </div>
@@ -232,17 +241,18 @@ export default {
     {
         try{
             
-            let singleHotel=  await axios.get(`http://localhost:3000/api/hotels/${params.id}`);
-            //let manyReviews= axios.get(`http://localhost:3000/api/reviews/${params.id}`);
-            //const [hotelResponse,reviewRespone]= await Promise.all([
-             // singleHotel//,manyReviews
-            //])
+            let singleHotel=axios.get(`http://localhost:3000/api/hotels/${params.id}`);
+            let likes= axios.get(`http://localhost:3000/api/getAvgRating/${params.id}`);
+            const [hotelResponse,rating]= await Promise.all([
+             singleHotel,likes
+            ])
+            console.log(likes)
             //console.log(singleHotel.data.hotel.photo.data)
             //console.log(reviewResponse)
             return{
-                hotel:singleHotel.data.hotel,
-                //reviews:reviewResponse.data.reviews
-                liked:0,
+                hotel:hotelResponse.data.hotel,
+      
+                liked:rating.data.avglike
               
             }
         }
@@ -253,10 +263,12 @@ export default {
   },
  data(){
         return{
+            scrollAmt:100,
             liked:0,
-            checkin:"",
-            checkout:"",
-            rooms:0
+            checkin:new Date("2020-04-16").getFullYear()+"-"+new Date("2020-04-16").getMonth()+"-"+new Date("2020-04-16").getDate(),
+            checkout:new Date("2020-04-17").getFullYear()+"-"+new Date("2020-04-17").getMonth()+"-"+new Date("2020-04-17").getDate(),
+            rooms:1,
+            total_cost:0
           
         };
     },
@@ -264,10 +276,11 @@ export default {
     async onLiked(){
       try{      console.log("Onliked")
                 let data=new FormData();
-                data.append("liked",this.liked);
+                this.liked=parseInt(this.liked,10)
+                data.append("likes",this.liked);
                 //data.append("review",this.review);
-
-                let response=await this.$axios.post(`/api/likes/${this.$route.params.id}/`,data);
+                console.log(this.liked)
+                let response=await this.$axios.post(`/api/likes/${this.$route.params.id}/${this.liked}`);
                
                 console.log(response)
                 this.$router.push(`/hotels/${this.$route.params.id}`);
@@ -284,15 +297,52 @@ export default {
       let data=new FormData();
       data.append("checkin",this.checkin);
       data.append("checkout",this.checkout);
+      
       let response =await this.$axios.$post(`/api/book/${this.$route.params.id}/${this.rooms}`,data)
       console.log(response)
-      this.$router.push("/");
+      alert("Successfully booked!")
     }
     catch(err){
                 console.log(err);
             }
       
      
+  },
+  async handleScroll () {
+
+      console.log(window.scrollY)
+          var scroll=window.scrollY;
+          console.log(scroll)
+          if(scroll>this.scrollAmt)
+          {
+            console.log("in if")
+            this.scrollAmt=scroll;
+            console.log(this.start)
+            console.log(this.end)
+            /*let read=await this.$axios.get(`/api/read/${this.start}/${this.end}`).then(function (response) {
+           
+            if(response.status==200)
+              {
+                
+              document.getElementById("content").innerHTML+=response.data;
+              
+              
+              }
+            })*/
+            //this.start=this.start+500
+            //this.end=this.end+500
+            //console.log(this.start)
+            //document.getElementById("content").innerHTML+=read.data;
+       
+          }
+          
+    }
+  ,
+  beforeMount () {
+    window.addEventListener('load', this.handleScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener('load', this.handleScroll);
   }
 
 }

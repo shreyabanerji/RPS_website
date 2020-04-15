@@ -81,7 +81,7 @@ export default {
                         }
                     });
                     //console.log("before push");
-                    this.$router.push("/");
+                    this.$router.replace("/");
                     //console.log("after push");
                 
             }

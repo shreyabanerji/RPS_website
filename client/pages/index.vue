@@ -53,11 +53,16 @@
                         <div class="a-row-spacing-small">
                           <!--Date-->
                          
-                          <nuxt-link :to="`hotels/${hotel._id}`" class="a-link-normal">
+                         <!-- <nuxt-link :to="`hotels/${hotel._id}`" class="a-link-normal" prefetch>
                             <h2 class="a-size-medium">
                               {{hotel.name}}
                                </h2>
-                          </nuxt-link>
+                          </nuxt-link>-->
+                          <a :href="`/hotels/${hotel._id}`" class="a-link-normal" prefetch>
+                            <h2 class="a-size-medium">
+                              {{hotel.name}}
+                               </h2>
+                          </a>
                             
                             <div class="a-row a-spacing-small">
               
@@ -66,9 +71,13 @@
                             
                         </div>
                         <!--City-->
+                            <a :href="`/city/${hotel.city._id}`">
                         <div class="a-row a-spacing-small">
+                         
                           {{hotel.city.name}}
+                          
                         </div>
+                        </a>
                         <!--Price-->
                         <div class="a-row-spacing-none">
                           <a href="#" class="a-link-normal a-text-normal">
@@ -106,11 +115,15 @@
     </div>
     <br><br>
     <div id="intro">
-    <h1 align="center" style="color:orange">Welcome to RPS </h1>
-    <div style="width:90%; text-align: justify;
-  text-justify: inter-word;margin:0 auto;" align="center">
-        <p id="content" style="color:blue"></p>
+    <h1 align="center" style="color:orange">A note from us... </h1>
+    <div style="border-style: groove;width:85%;margin:0 auto;" align="center">
+    <div style="width:85%; text-align: justify;text-justify: inter-word;margin:0 auto;" align="center">
+        <p id="content" style="font-size: 120%;color:blue ;"></p>
+
       </div>
+
+      </div>
+      <br>
     </div>
     </main>
 
@@ -130,8 +143,8 @@ import Vue from 'vue'
    
     data(){
       return{
-      start:0,
-      end:1024,
+      start:-500,
+      end:0,
       scrollAmt:50,
       count:0,
       city:""
@@ -169,7 +182,11 @@ import Vue from 'vue'
           {
             console.log("in if")
             this.scrollAmt=scroll;
-            
+
+            this.start=this.start+500
+            this.end=this.end+500
+            console.log(this.start)
+            console.log(this.end)
             let read=await this.$axios.get(`/api/read/${this.start}/${this.end}`).then(function (response) {
            
             if(response.status==200)
@@ -177,10 +194,10 @@ import Vue from 'vue'
                 
               document.getElementById("content").innerHTML+=response.data;
               
+              
               }
             })
-            this.start=this.start+500
-            this.end=this.end+500
+         
             //console.log(this.start)
             //document.getElementById("content").innerHTML+=read.data;
        

@@ -7,9 +7,9 @@ const fs = require('fs');
 const mongoose=require('mongoose');
 
 //mongoose.model("cities", CitiesSchema)
-router.post("/book/:hotelID:number",verifyToken,async(req,res)=>{
+router.post("/book/:hotelID/:number",verifyToken,async(req,res)=>{
     try{
-        for(var i=0;i<parseInt(number);i++)
+        for(var i=0;i<parseInt(req.params.number);i++)
         {
         let book_room=Room.findOne({hotel_name:req.params.hotelID})
         let booking=new Booking()
