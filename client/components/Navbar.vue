@@ -5,11 +5,7 @@
             <div class="row">
                 <!--Logo-->
                 <div class="col-sm-2">
-                    <div class="logo-area">
-                        <nuxt-link to="/">
-                            <img src="/img/logo_rps.png" alt="logo" class="img-fluid"/>
-                        </nuxt-link>
-                    </div>
+                    <p style="font-family:Times;font-size:350%;color:white">R.P.S</p>
                 </div>
                 <div class="col-sm-4">
                     
@@ -29,44 +25,21 @@
                             </div>
                         </nuxt-link>
                     </div>
-                </div>
+                </div>-->
                
                 <div class="col-xl-6 col-lg-5 col-md-4 col-sm-6 pl-0">
                     <div class="nav-fill">
                         <div class="nav-shop">
-                            <nuxt-link to="/history" class="nav-a nav-a-2 nav-single-row-link">
-                                <span class="nav-line-2">
-                                Browsing History
-                                <span class="nav-icon nav-arrow" style="visibility: visible"></span>
+                            <a href="/" class="nav-a nav-a-2 nav-single-row-link">
+                                <span class="nav-line-1">
+                                                Home
+                              
                                 </span>
-                            </nuxt-link>
+                            </a>
                         </div>
                         <div class="nav-xshop-container">
                             <div class="nav-xshop">
-                                <a href="#" class="nav-a">Today's deals</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                -->
-                <!--Accounts and booking-->
-                <div class="col-xl-4 col-lg-5 col-md-6 col-sm-4 p-0">
-                    <div class="nav-tools">
-                        <!--
-                        <a href="#" id="icp-nav-flyout" class="nav-a nav-a-2 icp-link-style-2">
-                            <span class="icp-nav-link-inner">
-                                <span class="nav-line-1">
-                                    <span class="icp-nav-globe-img-2"></span>
-                                    <span class="icp-nav-language">EN</span>
-                                </span>
-                                <span class="nav-line-2">
-                                    <span class="nav-icon nav-arrow" style="visibility :visible"></span>
-                                </span>
-                            </span>
-                        </a>-->
-                        <span class="icp-nav-link-border"> </span>
-                        <!--if user is logged in-->
-                            <template v-if="$auth.$state.loggedIn">
+                                <template v-if="$auth.$state.loggedIn">
                             <nuxt-link  to="/profile" 
                                         class="nav-a nav-a-2"  
                                         id="nav-link-accountList" 
@@ -90,6 +63,29 @@
                         
                                 </nuxt-link>
                             </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!--Accounts and booking-->
+                <div class="col-xl-4 col-lg-5 col-md-6 col-sm-4 p-0">
+                    <div class="nav-tools">
+                        <!--
+                        <a href="#" id="icp-nav-flyout" class="nav-a nav-a-2 icp-link-style-2">
+                            <span class="icp-nav-link-inner">
+                                <span class="nav-line-1">
+                                    <span class="icp-nav-globe-img-2"></span>
+                                    <span class="icp-nav-language">EN</span>
+                                </span>
+                                <span class="nav-line-2">
+                                    <span class="nav-icon nav-arrow" style="visibility :visible"></span>
+                                </span>
+                            </span>
+                        </a>-->
+                
+                        <!--if user is logged in-->
+                            
                             <!--
                             <nuxt-link to="/orders" class="nav-a nav-a-2 nav-single-row-link">
                                 <span class="nav-line-1"></span>

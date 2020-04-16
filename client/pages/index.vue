@@ -117,13 +117,10 @@
     <div id="intro">
     <h1 align="center" style="color:orange">A note from us... </h1>
     <div style="border-style: groove;width:85%;margin:0 auto;" align="center">
-    <div style="width:85%; text-align: justify;text-justify: inter-word;margin:0 auto;" align="center">
+    <div style="width:89%; text-align: justify;text-justify: inter-word;margin:0 auto;" align="center">
         <p id="content" style="font-size: 120%;color:blue ;"></p>
-
       </div>
-
       </div>
-      <br>
     </div>
     </main>
 
@@ -152,7 +149,7 @@ import Vue from 'vue'
     },
     async asyncData({$axios}){
       try
-      {
+      { 
         
         let response= await $axios.$get("http://localhost:3000/api/hotels");
         let recommendation=$axios.$get("http://localhost:3000/api/getRec");
@@ -166,6 +163,7 @@ import Vue from 'vue'
           
         }
         //app.getFP();
+       
       }
       catch(err){
         console.log(err);
@@ -175,18 +173,18 @@ import Vue from 'vue'
     methods:{
     async handleScroll () {
 
-      console.log(window.scrollY)
+      //console.log(window.scrollY)
           scroll=window.scrollY;
-          console.log(scroll)
+          //console.log(scroll)
           if(scroll>this.scrollAmt)
           {
-            console.log("in if")
+            //console.log("in if")
             this.scrollAmt=scroll;
 
             this.start=this.start+500
             this.end=this.end+500
-            console.log(this.start)
-            console.log(this.end)
+            //console.log(this.start)
+            //console.log(this.end)
             let read=await this.$axios.get(`/api/read/${this.start}/${this.end}`).then(function (response) {
            
             if(response.status==200)

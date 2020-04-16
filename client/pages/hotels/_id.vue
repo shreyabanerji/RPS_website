@@ -97,7 +97,8 @@
                   <div class="clearfix">
                     <div class="a-spacing-base">
                       <h3 class="a-spacing-base">Give your rating</h3>
-                        <input type="number" placeholder="Give rating" style="width: 20%;" min="1" max="5" v-model="liked"/>
+                        <!--<input type="number" placeholder="Give rating" style="width: 20%;" min="1" max="5" v-model="liked"/>-->
+                        <star-rating v-model="liked"></star-rating>
                     </div>
                     <div class="a-row text-right a-spacing-top-large">
                       <span class="a-button-register">
@@ -232,11 +233,13 @@
   </main>
 </template>
     
-<script lang="ts">
+<script type="module" lang="ts">
 import axios from 'axios';
-
+import StarRating from "../../components/star-rating.vue";
 export default {
-  
+  components:{
+    StarRating
+  },
   async asyncData({$axios,params})
     {
         try{
@@ -279,10 +282,11 @@ export default {
                 this.liked=parseInt(this.liked,10)
                 data.append("likes",this.liked);
                 //data.append("review",this.review);
-                console.log(this.liked)
+                //console.log(this.liked)
                 let response=await this.$axios.post(`/api/likes/${this.$route.params.id}/${this.liked}`);
                
-                console.log(response)
+                //console.log(response)
+                alert("You have rated the "+this.liked+" hotel successfully")
                 this.$router.push(`/hotels/${this.$route.params.id}`);
 
             }

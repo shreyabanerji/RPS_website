@@ -5,9 +5,9 @@
             <div class="row">
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
-                    <nuxt-link to="/" class="a-link-emphasis">
+                    <a href="/" class="a-link-emphasis">
                     <div>Home</div>
-                    </nuxt-link>
+                    </a>
                     <form class="mt-4">
                         <div class="a-box a-spacing-extra-large">
                             <div class="a-box-inner">
@@ -37,20 +37,21 @@
                                     v-model="password"
                                     class="a-input-text form-control auth-autofocus auth-required-field auth-contact-verification-request-info"/>
                                 </div>
-                                <div class="a-alert-container">
-                                    <div class="a-alert-content">Password must be atleast 6 characters</div>
-                                </div>
+                               
                                 <div class="a-row a-spacing-extra-large mb-4">
                                     <span class="a-button-primary">
                                         <span class="a-button-inner">
+                                            
                                             <span class="a-button-text" @click="OnSignup">Create your account</span>
+                                        
                                         </span>
                                     </span>
                                 </div>
                                 <div class="a-row">
                                     <b>
-                                        Already have an account?
+                                        
                                         <nuxt-link to="/login" class="a-link-emphasis">Sign in</nuxt-link>
+                                        if you already have an account.
                                     </b>
                                 </div>
                             </div>
@@ -86,7 +87,7 @@ export default {
                     password:this.password
                 }
                 let response=await axios.post("/api/auth/signup",data);
-                console.log(response);
+                //console.log(response);
                 if(response.status=200){
                     this.$auth.loginWith("local",{
                         data:{
@@ -94,7 +95,8 @@ export default {
                             password:this.password
                         }
                     });
-                    this.$router.push("/");
+                    this.$router.go({path:'/', force: true});
+                
                 }
             }
             catch(err){

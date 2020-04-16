@@ -51,7 +51,7 @@ export default {
     baseURL:URL
   },
   proxy:{
-    "/api":URL
+    "/api": URL
   },
   
   /*

@@ -219,12 +219,12 @@ router.get("/getRec",verifyToken,async(req,res)=>{
                            return [rank_lst,recommend];
                         }
 
-                        var rc=recommendation_eng(final_dict,req.decoded.name,pearson_correlation)
+                        var rc=recommendation_eng(final_dict,req.decoded.name,euclidean_score)
                         var id1=rc[1][0]
                         let hotel=await Hotel.findOne({_id: id1}).populate("city");
 
-
-
+                        
+                        
 
 
 
